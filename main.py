@@ -3,20 +3,16 @@ largeFile = "large.txt"
 
 # extracting the topographical data into a list
 topo = []
-with open(largeFile) as fin:
+with open(smallFile) as fin:
     for line in fin:  # for each line in the file we choose
-        line = line.strip()  # remove any non-number stuff
-        topoRow = []  # make a mini list for each line 
-        for ch in line:  # for each character in our line
-            topoRow.append(int(ch))  # add this character as an integer to the list with our row
-        topo.append(topoRow)  # add the completed row list to our topo data list
+        topo.append([int(ch) for ch in line.strip()])  # strip each line in file, iterate through each ch, and add the int of that to a list, append that list to topo
 
 # finding trailheads
 trailheads = []
-for idxRow, row in enumerate(topo):  # storing the row number and iterating through each row
-    for idxCol, num in enumerate(row):  # idx is the counter and num is the element in the list topo
-        if num == 0:
-            trailheads.append((idxRow, idxCol))  # adding the counter value (which is the index) for each time we find a zero
+for i in range(len(topo)):  # index value i for which row we're in
+    for j in range(len(topo[0])):  # index value j for which column we're in
+        if topo[i][j] == 0:  # if (i,j) in our map we load in is 0, it's a trailhead
+            trailheads.append((i, j))
 
 # functions to check if the height of an adjacent square is suitable
 def checkRight(pos, topo, height):

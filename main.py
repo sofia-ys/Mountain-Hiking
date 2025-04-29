@@ -66,20 +66,18 @@ popularityScore = []
 completionistScore = []
 
 for head in trailheads:  # repeating this loop for each trailhead
-    run = True
+    runPopularity = True
+    runCompletionist = True
+
+    # reset for popularity
     height = 0  # whenever we have a new trailhead the height is 0
     coords = [head]  # our starting coordinate is our trailhead
-    
-    while run:
+    while runPopularity:
         nextCoords = []  # resetting all possible next moves
 
         for coordinate in coords:
             options = makeCoords(coordinate, topo, height)  # adding all possible options
 
-            # nextCoords.extend(options) # for the completitionist score
-
-            # for the popularity score
-            options = makeCoords(coordinate, topo, height)  # possible next coordinates from the coord
             for option in options:  # making sure we don't double up 
                 if option not in nextCoords:
                     nextCoords.append(option)  # adds the elements in option one by one instad of the list of options (as in append)
@@ -89,34 +87,23 @@ for head in trailheads:  # repeating this loop for each trailhead
 
         if height == 9:  # check whether we reached a summit
             popularityScore.append(len(nextCoords))  # coords will be a list with all possible summits
-            # completionistScore.append(len(nextCoordsCompletionist))
-            run = False
+            runPopularity = False
     
-    # while run:
-    #     # resetting all possible next moves
-    #     nextCoordsPopularity = []  # no duplicates allowed
-    #     nextCoordsCompletionist = []  # duplicates allowed
+    # reset for completionist
+    height = 0  # whenever we have a new trailhead the height is 0
+    coords = [head]  # our starting coordinate is our trailhead
+    while runCompletionist:
+        nextCoords = []  # resetting all possible next moves
 
-    #     for coordinate in coords:
-    #         options = makeCoords(coordinate, topo, height)  # adding all possible options
+        for coordinate in coords:
+            nextCoords.extend(makeCoords(coordinate, topo, height))  # adding all possible options instad of the list of options (as in append)
 
-    #         # for the completitionist score
-    #         nextCoordsCompletionist.extend(options)
+        coords = nextCoords  # setting our new set of coordinates to our next possible moves 
+        height = height + 1  # adjusting our height 
 
-    #         # for the popularity score
-    #         options = makeCoords(coordinate, topo, height)  # possible next coordinates from the coord
-    #         for option in options:  # making sure we don't double up 
-    #             if option not in nextCoordsPopularity:
-    #                 nextCoordsPopularity.append(option)  # adds the elements in option one by one instad of the list of options (as in append)
-
-    #     coords = nextCoordsPopularity  # setting our new set of coordinates to our next possible moves 
-    #     completionistScore.append(len(nextCoordsCompletionist))
-    #     height = height + 1  # adjusting our height 
-
-    #     if height == 9:  # check whether we reached a summit
-    #         popularityScore.append(len(nextCoordsPopularity))  # coords will be a list with all possible summits
-    #         # completionistScore.append(len(nextCoordsCompletionist))
-    #         run = False
+        if height == 9:  # check whether we reached a summit
+            completionistScore.append(len(nextCoords))
+            runCompletionist = False
 
 print("Popularity score:", sum(popularityScore))
 print("Completionist score:", sum(completionistScore))

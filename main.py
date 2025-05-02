@@ -3,7 +3,7 @@ largeFile = "large.txt"
 
 # extracting the topographical data into a list
 topo = []
-with open(smallFile) as fin:
+with open(largeFile) as fin:
     for line in fin:  # for each line in the file we choose
         topo.append([int(ch) for ch in line.strip()])  # strip each line in file, iterate through each ch, and add the int of that to a list, append that list to topo
 

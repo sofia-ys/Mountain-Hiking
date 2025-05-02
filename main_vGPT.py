@@ -61,7 +61,7 @@ def count_distinct_paths(map_data, start):
     dfs(start[0], start[1], 0)  # starts at the trailhead with its coordinates and height 0
     return count  # returns total number of distinct increasing-elevation paths from height 0 to height 9 starting at start
 # how dfs works (recursion)
-# trailhead -> adj coordinates that are +1 -> if multiple values start with first one -> adj coords that are +1 ->  if multiple values start 
+# trailhead -> adj coordinates that are +1 -> if multiple values, start with first one -> adj coords that are +1 ->  if multiple values, start 
 # with first one -> repeat until either cannot go +1 with adj coordinates or we reach a summit, if a summit is reached we add +1 to the count 
 # -> go back to where we last branched (found multiple adj coordinates that had +1 height) -> try to get to a summit again -> return to branch 
 # before that
